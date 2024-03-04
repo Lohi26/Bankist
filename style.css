@@ -75,11 +75,13 @@ body, .head{
 }
 
 
-.main1{
+/* .main1{
     position: absolute;
     top: 230px;
     left: 63%;
-}
+} */
+
+
 .tb1, .tb2, .tb3{
     background-color: black;
     width: 400px;
@@ -179,7 +181,80 @@ body, .head{
 }
 
 
-@media screen and (max-width: 798px) {
+.typing:hover{
+    background-color:white;
+}
+
+
+.main1 {
+    position: absolute;
+    top: 230px;
+    left: 70%;
+    width: 30%; /* Adjust width as needed */
+}
+
+.main2 {
+    width: 50%; 
+    max-width: 65%; 
+    height: 450px;
+    margin: 0 170px; 
+    background-color: #fff;
+    border-radius: 1rem;
+    overflow: scroll;
+    text-transform: uppercase;
+}
+
+
+.row-1-st, .row-2-nd{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+
+.row-1-st, .row-2-nd{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    border-bottom: 1px solid #eee;
+}
+
+
+.row-3, .row3 {
+    margin-left: auto;
+    padding-left: 10px; 
+}
+
+
+.row-1{
+    border-radius: 25px;
+    padding: 0.1rem 0.4rem ;
+    background-color:lightgreen;
+    font-size: 0.9rem;
+}
+
+
+.row1{
+    border-radius: 25px;
+    padding: 0.1rem 0.4rem ;
+    background-color:red;
+    font-size: 0.9rem;
+}
+
+
+.row-2, .row2{
+    font-size: 0.8rem;
+}
+
+
+.row-3, .row3{
+    font-size: 1.3rem;
+}
+
+
+@media screen and (max-width: 768px) {
     .amt1{
         font-size: 45px;
     }
@@ -211,11 +286,13 @@ body, .head{
     }
     .sorting{
         position: absolute;
-        left: 420px;
+        left: 650px;
+    }
+    .main1{
+        left: 62%;
+    }
+    .main2{
+        margin-left: 0;
+        width: 450px;
     }
 };
-
-
-.typing:hover{
-    background-color:white;
-}
