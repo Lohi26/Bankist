@@ -177,7 +177,17 @@ body, .head{
 
 
 .amt-style1, .amt-style2, .amt-style3{
-    font-size: 30px;
+    font-size: 25px;
+}
+
+
+.amt-style1, .amt-style3{
+    color: lightgreen;
+}
+
+
+.amt-style2{
+    color: red;
 }
 
 
@@ -251,6 +261,17 @@ body, .head{
 
 .row-3, .row3{
     font-size: 1.3rem;
+}
+
+
+.operation{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    align-content: center;
+    width: 30px;
+    border-radius: 20px;
+    margin-left: 10px;
 }
 
 
