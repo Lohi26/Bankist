@@ -1,15 +1,14 @@
 'use strict';
-'use strict';
 
 const account1 = {
-    owner: "Lohitav",
+    owner: "Lohitav Chandrasekaran",
     amount: [200, 450, -400, 3000, -650, -130, 70, 1300],
     interestRate: 1.2,
     pin: 2619
 };
 
 const account2 = {
-    owner: "Minnie",
+    owner: "Minnie Innocent",
     amount: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
     interestRate: 1.5,
     pin: 2619
@@ -23,13 +22,19 @@ const account3 = {
 };
 
 const account4 = {
-    owner: "Padmavathi",
+    owner: "Padmavathi Kannappan",
     amount: [430, 1000, 700, 50, 90],
     interestRate: 1,
     pin: 2619
 };
 
+const accounts=[account1,account2,account3,account4];
+
+
 const main2Container = document.querySelector(".main2");
+const userButton=document.querySelector(".arrow");
+const userNameUser=document.querySelector(".user");
+const userPassword=document.querySelector(".pin")
 
 const displayAmount = function (amounts) {
     main2Container.innerHTML="";
@@ -42,3 +47,10 @@ const displayAmount = function (amounts) {
     });
 };
 displayAmount(account1.amount);
+
+const checkuser=function(accounts){
+    accounts.forEach(function(ele,i){
+        ele.userName=ele.owner.toLowerCase().split(" ").map( uName => uName[0]).join("");
+    });
+};
+checkuser(accounts);
