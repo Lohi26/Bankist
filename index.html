@@ -16,54 +16,56 @@
             <input type="number" placeholder="pin" class="pin">
             <button class="arrow">&rarr;</button>
         </header>
-    </nav> 
-    <div class="main"> 
-        <div class="inter1">
-            <p class="tx2">Current balance</p>
-            <p class="date_time1">As of <span>28/02/2024</span>, <span>15:74</span></p>
+    </nav>
+    <div class="container">
+        <div class="main"> 
+            <div class="inter1">
+                <p class="tx2">Current balance</p>
+                <p class="date_time1">As of <span>28/02/2024</span>, <span>15:74</span></p>
+            </div>
+            <div class="inter2">
+                <p class="amt1">25 952,59 €</p>
+            </div>
         </div>
-        <div class="inter2">
-            <p class="amt1">25 952,59 €</p>
+        <div class="main1">
+            <div class="tb1">
+                <p class="money">Transfer money <button class="operation">&rarr;</button></p>
+                <input type="text" class="branch typing">
+                <input type="number" class="amount typing">
+                <p><span class="special transfer">Transfer to</span><span class="special amt">Amount</span></p>
+            </div>
+            <div class="tb2">
+                <p class="money">Request loan <button class="operation">&rarr;</button></p>
+                <input type="number" class="typing loan">
+                <p class="special">Amount</p>
+            </div>
+            <div class="tb3">
+                <p class="money">Close account <button class="operation">&rarr;</button></p>
+                <input type="text" class="typing users">
+                <input type="number" class="typing pins">
+                <p><span class="special transfer useres">Conform user</span><span class="special amt pinss">Pin</span></p> 
+            </div>
         </div>
-    </div>
-    <div class="main1">
-        <div class="tb1">
-            <p class="money">Transfer money <button class="operation">&rarr;</button></p>
-            <input type="text" class="branch typing">
-            <input type="number" class="amount typing">
-            <p><span class="special transfer">Transfer to</span><span class="special amt">Amount</span></p>
-        </div>
-        <div class="tb2">
-            <p class="money">Request loan <button class="operation">&rarr;</button></p>
-            <input type="number" class="typing loan">
-            <p class="special">Amount</p>
-        </div>
-        <div class="tb3">
-            <p class="money">Close account <button class="operation">&rarr;</button></p>
-            <input type="text" class="typing users">
-            <input type="number" class="typing pins">
-            <p><span class="special transfer useres">Conform user</span><span class="special amt pinss">Pin</span></p> 
-        </div>
-    </div>
-    <div class="main2">
-        <div class="row-1-st">
-          <div class="row-1">2 deposit</div>
-          <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 days ago</div>
-          <div class="row-3">4 000€</div>
-        </div>
-        <div class="row-2-nd">
-          <div class="row1">1 withdrawal</div>
-          <div class="row2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;24/01/2037</div>
-          <div class="row3">-378€</div>
-        </div>
-      </div>
-    <footer class="last">
-        <p>
-            IN &nbsp;<span class="amt-style1">27 035,20 €</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OUT &nbsp;<span class="amt-style2">1082,61 €</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT &nbsp;<span class="amt-style3">323,46 €</span>
-        </p>
-        <button class="sorting">&#8595;&nbsp;&nbsp;SORT</button>
-    </footer>
+        <div class="main2">
+            <div class="row-1-st">
+              <div class="row-1">2 deposit</div>
+              <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 days ago</div>
+              <div class="row-3">4 000 €</div>
+            </div>
+            <div class="row-2-nd">
+              <div class="row1">1 withdrawal</div>
+              <div class="row2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;24/01/2037</div>
+              <div class="row3">-378€</div>
+            </div>
+          </div>
+        <footer class="last">
+            <p>
+                IN &nbsp;<span class="amt-style1">27 035,20 €</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OUT &nbsp;<span class="amt-style2">1082,61 €</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT &nbsp;<span class="amt-style3">323,46 €</span>
+            </p>
+            <button class="sorting">&#8595;&nbsp;&nbsp;SORT</button>
+        </footer>
+    </div> 
     <script src='indexjs.js'></script>
 </body>
 </html>
