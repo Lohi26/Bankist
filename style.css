@@ -77,14 +77,14 @@ body, .head{
 
 .main1{
     position: absolute;
-    top: 200px;
+    top: 230px;
     left: 63%;
 }
 .tb1, .tb2, .tb3{
     background-color: black;
     width: 400px;
     height: 133px;
-    margin-top: 10px;
+    margin-top: 25px;
     border-radius: 25px;
 }
 
@@ -158,16 +158,27 @@ body, .head{
     display: flex;
     justify-content: space-between;
     position: absolute;
-    top: 93%;
+    top: 100%;
     left: 12.5%;
 }
 
 
 .sorting{
     position: absolute;
-    top: 5px;
-    left: 690px;
+    outline: none;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    top: 25px;
+    left: 680px;
 }
+
+
+.amt-style1, .amt-style2, .amt-style3{
+    font-size: 30px;
+}
+
+
 @media screen and (max-width: 798px) {
     .amt1{
         font-size: 45px;
@@ -202,4 +213,9 @@ body, .head{
         position: absolute;
         left: 420px;
     }
+};
+
+
+.typing:hover{
+    background-color:white;
 }
