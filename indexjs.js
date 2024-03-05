@@ -34,7 +34,8 @@ const accounts=[account1,account2,account3,account4];
 const main2Container = document.querySelector(".main2");
 const userButton=document.querySelector(".arrow");
 const userNameUser=document.querySelector(".user");
-const userPassword=document.querySelector(".pin")
+const userPassword=document.querySelector(".pin");
+let totalDisplay=document.querySelector(".amt1");
 
 const displayAmount = function (amounts) {
     main2Container.innerHTML="";
@@ -54,3 +55,18 @@ const checkuser=function(accounts){
     });
 };
 checkuser(accounts);
+
+
+const totalFunction=function(amounts)
+{
+    const totalAmountAccount1=amounts.reduce( (acc,arr) => acc+arr,0);
+    totalDisplay.textContent=totalAmountAccount1+"  €";
+};
+totalFunction(account1.amount);
+
+
+const maximumValue=function(amounts){
+    const max=amounts.reduce( (acc,arr) => Math.max(acc,arr),amounts[0]);
+    console.log(max);
+};
+maximumValue(account1.amount);
