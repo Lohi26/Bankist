@@ -38,21 +38,16 @@ const userButton=document.querySelector(".arrow");
 const userNameUser=document.querySelector(".user");
 const userPassword=document.querySelector(".pin");
 const totalDisplay=document.querySelector(".amt1");
+const transerButton=document.querySelector("#op1");
+const loanButton=document.querySelector("#op2");
+const closeButton=document.querySelector("#op3");
+const branchEnter=document.querySelector(".branch");
+const branchAmount=document.querySelector(".amount");
+const loanEnter=document.querySelector(".loan");
+const closeUser=document.querySelector(".users");
+const closePins=document.querySelector(".pins");
 
 // console.log(account3);
-
-const displayAmount = function (amounts) {
-    main2Container.innerHTML="";
-    amounts.forEach(function(arr,i){
-        const html=`<div class="row-1-st">
-        <div class="row${arr>0?"-1":"1"}">${i+1} ${arr>0?"deposit":"withdrawal"}</div>
-        <div class="row-3">${arr} €</div>
-      </div>`;
-      main2Container.insertAdjacentHTML("afterbegin",html);
-    });
-};
-
-
 
 const checkuser=function(accounts){
     accounts.forEach(function(ele,i){
@@ -62,9 +57,10 @@ const checkuser=function(accounts){
 checkuser(accounts);
 
 
-document.querySelector(".arrow").addEventListener("click",function(e){
+let loginUser;
+userButton.addEventListener("click",function(e){
     e.preventDefault();
-    const loginUser=accounts.find(account => account.userName===userNameUser.value);
+    loginUser=accounts.find(account => account.userName===userNameUser.value);
     if(loginUser?.pin===Number(userPassword.value))
     {
         messgae.textContent=`Welcome back! ${loginUser.owner.split(" ").find(str => str)}`;
@@ -81,31 +77,29 @@ document.querySelector(".arrow").addEventListener("click",function(e){
 });
 
 
-const checkUserLogin=function(accounts)
-{
-    if(accounts.find(account => account.userName===userNameUser))
-    {
-        if(userPassword===2619)
-        {
-            document.querySelector(".arrow").addEventListener("click",function(){
-                
-            });
-        }
-    }
+const displayAmount = function (amounts) {
+    main2Container.innerHTML="";
+    amounts.forEach(function(arr,i){
+        const html=`<div class="row-1-st">
+        <div class="row${arr>0?"-1":"1"}">${i+1} ${arr>0?"deposit":"withdrawal"}</div>
+        <div class="row-3">${arr} €</div>
+      </div>`;
+      main2Container.insertAdjacentHTML("afterbegin",html);
+    });
 };
-checkUserLogin(accounts);
 
-
+let balanceAccounts;
 const totalFunction=function(amounts)
 {
-    const totalAmountAccount1=amounts.reduce( (acc,arr) => acc+arr,0);
-    totalDisplay.textContent=totalAmountAccount1+"  €";
+    const totalAmountAccount=amounts.reduce( (acc,arr) => acc+arr,0);
+    balanceAccounts=totalAmountAccount;
+    totalDisplay.textContent=totalAmountAccount+"  €";
 };
-
 
 
 const displayDetails=function(amounts,loginUser)
 {
+    console.log("Hai"+loginUser.amount);
     document.querySelector(".amt-style1").textContent=amounts.filter( ele => ele>0)
     .reduce( (acc,ele) => acc+ele,0)+" €";
     document.querySelector(".amt-style2").textContent=Math.abs(amounts.filter( ele => ele<0)
@@ -115,3 +109,18 @@ const displayDetails=function(amounts,loginUser)
     .filter(ele => ele>=1)
     .reduce( (acc,ele) => ele+acc,0)+" €";
 };
+
+
+transerButton.addEventListener("click",function(){
+    const findedObjectAccount=accounts.find(account => account.userName===branchEnter.value);
+    if(branchAmount.value<balanceAccounts && findedObjectAccount?.userName!==loginUser.userName)
+    {
+        findedObjectAccount.amount.push(Number(branchAmount.value));
+        loginUser.amount.push(Number("-"+branchAmount.value));
+        displayAmount(loginUser.amount);
+        totalFunction(loginUser.amount);
+        displayDetails(loginUser.amount,loginUser);
+    }
+    branchAmount.value="";
+    branchEnter.value="";
+});
