@@ -65,8 +65,10 @@ const totalFunction=function(amounts)
 totalFunction(account1.amount);
 
 
-const maximumValue=function(amounts){
-    const max=amounts.reduce( (acc,arr) => Math.max(acc,arr),amounts[0]);
-    console.log(max);
+const displayDetails=function(amounts)
+{
+    document.querySelector(".amt-style1").textContent=amounts.filter( ele => ele>0).reduce( (acc,ele) => acc+ele,0)+" €";
+    document.querySelector(".amt-style2").textContent=Math.abs(amounts.filter( ele => ele<0).reduce( (acc,ele) => acc+ele,0))+" €";
+    document.querySelector(".amt-style3").textContent=amounts.filter( ele => ele>0).map( ele => ele*1.2/100).filter(ele => ele>=1).reduce( (acc,ele) => ele+acc,0)+" €";
 };
-maximumValue(account1.amount);
+displayDetails(account1.amount);
