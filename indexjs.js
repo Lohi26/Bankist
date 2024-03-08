@@ -155,11 +155,17 @@ op3.addEventListener("click",function(){
 
 
 op2.addEventListener("click",function(){
-    loginUser.amount.push(Number(loanEnter.value));
-    displayAmount(loginUser.amount);
-    totalFunction(loginUser.amount);
-    displayDetails(loginUser.amount,loginUser);
+    if(loginUser.amount.some(ele => ele>=loanEnter.value*0.1))
+    {
+        loginUser.amount.push(Number(loanEnter.value));
+        displayAmount(loginUser.amount);
+        totalFunction(loginUser.amount);
+        displayDetails(loginUser.amount,loginUser);
+    }
+    else
+    alert("Cannot provide loan to this user");
     loanEnter.value="";
+    console.log("Loan matters");
 });
 
 
