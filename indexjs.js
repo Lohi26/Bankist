@@ -1,5 +1,4 @@
 'use strict';
-
 const account1 = {
     owner: "Lohitav Chandrasekaran",
     amount: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -28,6 +27,7 @@ const account4 = {
     pin: 6
 };
 
+
 const accounts=[account1,account2,account3,account4];
 
 
@@ -46,6 +46,7 @@ const branchAmount=document.querySelector(".amount");
 const loanEnter=document.querySelector(".loan");
 const closeUser=document.querySelector(".users");
 const closePins=document.querySelector(".pins");
+const sortAmounts=document.querySelector(".sort");
 
 // console.log(account3);
 
@@ -74,6 +75,10 @@ userButton.addEventListener("click",function(e){
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
     }
+    else
+    {
+        alert("Enter valid username and password, enter a valid one");
+    }
 });
 
 
@@ -99,7 +104,6 @@ const totalFunction=function(amounts)
 
 const displayDetails=function(amounts,loginUser)
 {
-    console.log("Hai"+loginUser.amount);
     document.querySelector(".amt-style1").textContent=amounts.filter( ele => ele>0)
     .reduce( (acc,ele) => acc+ele,0)+" €";
     document.querySelector(".amt-style2").textContent=Math.abs(amounts.filter( ele => ele<0)
@@ -121,6 +125,44 @@ transerButton.addEventListener("click",function(){
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
     }
+    else
+    {
+        alert("Invalid bank balance");
+    }
     branchAmount.value="";
     branchEnter.value="";
 });
+
+
+op3.addEventListener("click",function(){
+    const findedObjectCloseAccount=accounts.find(account => account.userName===closeUser.value);
+    const index=accounts.findIndex(account => account.userName===closeUser.value);
+    if(closeUser.value!==loginUser.userName && index>=0 && Number(closePins.value)===findedObjectCloseAccount.pin)
+    {
+        accounts.splice(index,1);
+        alert(`${findedObjectCloseAccount.owner} account is closed successfully`);
+    }
+    else
+    {
+        if(findedObjectCloseAccount)
+        alert("Enter a valid username and password");
+        else
+        alert("The entered account is now actice, so cannot be closed");
+    }
+    closeUser.value="";
+    closePins.value="";
+});
+
+
+op2.addEventListener("click",function(){
+    loginUser.amount.push(Number(loanEnter.value));
+    displayAmount(loginUser.amount);
+    totalFunction(loginUser.amount);
+    displayDetails(loginUser.amount,loginUser);
+    loanEnter.value="";
+});
+
+
+// sortAmounts.addEventListener("click",function(){
+    
+// });
