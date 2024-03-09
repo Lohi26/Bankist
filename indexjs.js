@@ -169,6 +169,7 @@ op2.addEventListener("click",function(){
     console.log("Loan matters");
 });
 
+
 let sort=true;
 sortAmounts.addEventListener("click",function(){
     displayAmount(loginUser.amount,sort);
