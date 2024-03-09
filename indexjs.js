@@ -46,7 +46,7 @@ const branchAmount=document.querySelector(".amount");
 const loanEnter=document.querySelector(".loan");
 const closeUser=document.querySelector(".users");
 const closePins=document.querySelector(".pins");
-const sortAmounts=document.querySelector(".sort");
+const sortAmounts=document.querySelector(".sorting");
 
 // console.log(account3);
 
@@ -82,9 +82,10 @@ userButton.addEventListener("click",function(e){
 });
 
 
-const displayAmount = function (amounts) {
+const displayAmount = function (amounts,sort) {
+    const array=sort ? amounts.slice().sort((a,b) => a-b):amounts;
     main2Container.innerHTML="";
-    amounts.forEach(function(arr,i){
+    array.forEach(function(arr,i){
         const html=`<div class="row-1-st">
         <div class="row${arr>0?"-1":"1"}">${i+1} ${arr>0?"deposit":"withdrawal"}</div>
         <div class="row-3">${arr} €</div>
@@ -168,7 +169,8 @@ op2.addEventListener("click",function(){
     console.log("Loan matters");
 });
 
-
-// sortAmounts.addEventListener("click",function(){
-    
-// });
+let sort=true;
+sortAmounts.addEventListener("click",function(){
+    displayAmount(loginUser.amount,sort);
+    sort=sort?false:true;
+});
