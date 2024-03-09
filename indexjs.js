@@ -175,3 +175,9 @@ sortAmounts.addEventListener("click",function(){
     displayAmount(loginUser.amount,sort);
     sort=sort?false:true;
 });
+
+
+totalDisplay.addEventListener("click",function(){
+    const arr=Array.from(document.querySelectorAll(".row-3"),(ele,i)=>Number(ele.textContent.replace("€","")));
+    console.log(arr);
+});
