@@ -145,10 +145,14 @@ op3.addEventListener("click",function(){
     }
     else
     {
-        if(findedObjectCloseAccount)
-        alert("Enter a valid username and password");
+        if(String(closeUser.value)===findedObjectCloseAccount.userName && Number(closePins.value)===findedObjectCloseAccount.pin)
+        {
+            alert("This account is actice now so, it can't be closed");
+        }
         else
-        alert("The entered account is now actice, so cannot be closed");
+        {
+            alert("Please enter valid username and password to close the account");
+        }
     }
     closeUser.value="";
     closePins.value="";
