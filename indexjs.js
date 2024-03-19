@@ -235,3 +235,4 @@ totalDisplay.addEventListener("click",function(){
 });
 
 
+// console.log(accounts.map(account => console.log(...account.movementsDates)));
