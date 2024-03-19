@@ -1,7 +1,7 @@
 'use strict';
 const account1 = {
     owner: "Lohitav Chandrasekaran",
-    amount: [200, 450, -400, 3000, -650, -130, 70, 1300],
+    amount: [200.52, 450, -400, 3000.23, -650, -130, 70.25, 1300],
     interestRate: 1.2,
     pin: 26,
     movementsDates: [
@@ -20,7 +20,7 @@ const account1 = {
 
 const account2 = {
     owner: "Minnie Innocent",
-    amount: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    amount: [5000.70, 3400, -150.235, -790, -3210, -1000.89, 8500, -30],
     interestRate: 1.5,
     pin: 19,
     movementsDates: [
@@ -39,7 +39,7 @@ const account2 = {
 
 const account3 = {
     owner: "Sanjay Karthik",
-    amount: [200, -200, 340, -300, -20, 50, 400, -460],
+    amount: [200.25, -200, 340.8, -300, -20.58, 50, 400.03, -460],
     interestRate: 0.7,
     pin: 20,
     movementsDates: [
@@ -58,7 +58,7 @@ const account3 = {
 
 const account4 = {
     owner: "Padmavathi Kannappan",
-    amount: [430, 1000, 700, 50, 90],
+    amount: [430.74, 1000, 700.2, 50, 90.0],
     interestRate: 1,
     pin: 6,
     movementsDates: [
@@ -135,8 +135,8 @@ const displayAmount = function (amounts,sort) {
     main2Container.innerHTML="";
     array.forEach(function(arr,i){
         const html=`<div class="row-1-st">
-        <div class="row${arr>0?"-1":"1"}">${i+1} ${arr>0?"deposit":"withdrawal"}</div>
-        <div class="row-3">${arr} €</div>
+        <div class="row${Math.floor(arr)>0?"-1":"1"}">${i+1} ${Math.floor(arr)>0?"deposit":"withdrawal"}</div>
+        <div class="row-3">${Math.floor(arr)} €</div>
       </div>`;
       main2Container.insertAdjacentHTML("afterbegin",html);
     });
@@ -146,7 +146,7 @@ let balanceAccounts;
 const totalFunction=function(amounts)
 {
     const totalAmountAccount=amounts.reduce( (acc,arr) => acc+arr,0);
-    balanceAccounts=totalAmountAccount;
+    balanceAccounts=totalAmountAccount.toFixed(2);
     totalDisplay.textContent=totalAmountAccount+"  €";
 };
 
@@ -154,13 +154,13 @@ const totalFunction=function(amounts)
 const displayDetails=function(amounts,loginUser)
 {
     document.querySelector(".amt-style1").textContent=amounts.filter( ele => ele>0)
-    .reduce( (acc,ele) => acc+ele,0)+" €";
+    .reduce( (acc,ele) => acc+Math.floor(ele),0)+" €";
     document.querySelector(".amt-style2").textContent=Math.abs(amounts.filter( ele => ele<0)
-    .reduce( (acc,ele) => acc+ele,0))+" €";
+    .reduce( (acc,ele) => acc+Math.floor(ele),0))+" €";
     document.querySelector(".amt-style3").textContent=amounts.filter( ele => ele>0)
-    .map( ele => ele*loginUser.interestRate/100)
+    .map( ele => Math.floor(ele)*loginUser.interestRate/100)
     .filter(ele => ele>=1)
-    .reduce( (acc,ele) => ele+acc,0)+" €";
+    .reduce( (acc,ele) => Math.floor(ele)+acc,0)+" €";
 };
 
 
@@ -208,9 +208,10 @@ op3.addEventListener("click",function(){
 
 
 op2.addEventListener("click",function(){
-    if(loginUser.amount.some(ele => ele>=loanEnter.value*0.1))
+    const loanAmount=Math.floor(loanEnter.value);
+    if(loginUser.amount.some(ele => ele>=loanAmount*0.1))
     {
-        loginUser.amount.push(Number(loanEnter.value));
+        loginUser.amount.push(loanAmount);
         displayAmount(loginUser.amount);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
