@@ -232,5 +232,6 @@ sortAmounts.addEventListener("click",function(){
 
 totalDisplay.addEventListener("click",function(){
     const arr=Array.from(document.querySelectorAll(".row-3"),(ele,i)=>Number(ele.textContent.replace("€","")));
-    console.log(arr);
 });
+
+
