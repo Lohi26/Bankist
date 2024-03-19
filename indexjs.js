@@ -95,6 +95,8 @@ const loanEnter=document.querySelector(".loan");
 const closeUser=document.querySelector(".users");
 const closePins=document.querySelector(".pins");
 const sortAmounts=document.querySelector(".sorting");
+const dateChange=document.querySelector(".date");
+const timeChange=document.querySelector(".time");
 
 // console.log(account3);
 
@@ -130,8 +132,8 @@ userButton.addEventListener("click",function(e){
 });
 
 
-const displayAmount = function (amounts,sort) {
-    const array=sort ? amounts.slice().sort((a,b) => a-b):amounts;
+const displayAmount = function (amount,sort) {
+    const array=sort ? amount.slice().sort((a,b) => a-b):amount;
     main2Container.innerHTML="";
     array.forEach(function(arr,i){
         const html=`<div class="row-1-st">
@@ -146,8 +148,8 @@ let balanceAccounts;
 const totalFunction=function(amounts)
 {
     const totalAmountAccount=amounts.reduce( (acc,arr) => acc+arr,0);
-    balanceAccounts=totalAmountAccount.toFixed(2);
-    totalDisplay.textContent=totalAmountAccount+"  €";
+    balanceAccounts=totalAmountAccount;
+    totalDisplay.textContent=Math.floor(totalAmountAccount)+"  €";
 };
 
 
@@ -235,4 +237,7 @@ totalDisplay.addEventListener("click",function(){
 });
 
 
-// console.log(accounts.map(account => console.log(...account.movementsDates)));
+
+const date=new Date();
+dateChange.textContent=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
+timeChange.textContent=date.getHours()+":"+date.getMinutes();
