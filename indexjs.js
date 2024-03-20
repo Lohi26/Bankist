@@ -1,6 +1,6 @@
 'use strict';
 const account1 = {
-    owner: "Lohitav Chandrasekaran",
+    owner: "Chandrasekaran Lohitav",
     amount: [200.52, 450, -400, 3000.23, -650, -130, 70.25, 1300],
     interestRate: 1.2,
     pin: 26,
@@ -55,7 +55,7 @@ const account3 = {
     currency: "CAD",
     locale: "en-CA"
 };
-
+console.log()
 const account4 = {
     owner: "Padmavathi Kannappan",
     amount: [430.74, 1000, 700.2, 50, 90.0],
@@ -75,6 +75,8 @@ const account4 = {
     locale: "en-AU"
 };
 
+let str=account1.movementsDates[0].split("-");
+console.log(str);
 
 const accounts=[account1,account2,account3,account4];
 
@@ -86,7 +88,7 @@ const userButton=document.querySelector(".arrow");
 const userNameUser=document.querySelector(".user");
 const userPassword=document.querySelector(".pin");
 const totalDisplay=document.querySelector(".amt1");
-const transerButton=document.querySelector("#op1");
+const transferButton=document.querySelector("#op1");
 const loanButton=document.querySelector("#op2");
 const closeButton=document.querySelector("#op3");
 const branchEnter=document.querySelector(".branch");
@@ -98,8 +100,9 @@ const sortAmounts=document.querySelector(".sorting");
 const dateChange=document.querySelector(".date");
 const timeChange=document.querySelector(".time");
 
-// console.log(account3);
+// console.log(account3.movementsDates.length);
 
+let bool=true;
 const checkuser=function(accounts){
     accounts.forEach(function(ele,i){
         ele.userName=ele.owner.toLowerCase().split(" ").map( uName => uName[0]).join("");
@@ -133,6 +136,19 @@ userButton.addEventListener("click",function(e){
 
 
 const displayAmount = function (loginUser,sort) {
+    if(bool)
+    {
+        let year=date.getFullYear();
+        let month=date.getMonth()+1;
+        let dates=date.getDate();
+        let hours=date.getHours();
+        let minutes=date.getMinutes();
+        let seconds=date.getSeconds()
+        let milliseconds=date.getMilliseconds();
+        month=month<=9?"0"+month:month;
+        dates=dates<=9?"0"+dates:dates;
+        loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");   
+    }
     const array=sort ? loginUser.amount.slice().sort((a,b) => a-b):loginUser.amount;
     main2Container.innerHTML="";
     array.forEach(function(arr,i){
@@ -143,6 +159,7 @@ const displayAmount = function (loginUser,sort) {
       </div>`;
       main2Container.insertAdjacentHTML("afterbegin",html);
     });
+    
 };
 
 let balanceAccounts;
@@ -167,13 +184,15 @@ const displayDetails=function(amounts,loginUser)
 };
 
 
-transerButton.addEventListener("click",function(){
+
+transferButton.addEventListener("click",function(){
     const findedObjectAccount=accounts.find(account => account.userName===branchEnter.value);
     if(branchAmount.value<balanceAccounts && findedObjectAccount?.userName!==loginUser.userName)
     {
+        bool=bool?false:true;
         findedObjectAccount.amount.push(Number(branchAmount.value));
         loginUser.amount.push(Number("-"+branchAmount.value));
-        displayAmount(loginUser.amount);
+        displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
     }
@@ -214,15 +233,15 @@ op2.addEventListener("click",function(){
     const loanAmount=Math.floor(loanEnter.value);
     if(loginUser.amount.some(ele => ele>=loanAmount*0.1))
     {
+        bool=bool?false:true;
         loginUser.amount.push(loanAmount);
-        displayAmount(loginUser.amount);
+        displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
     }
     else
     alert("Cannot provide loan to this user");
     loanEnter.value="";
-    console.log("Loan matters");
 });
 
 
@@ -240,5 +259,6 @@ totalDisplay.addEventListener("click",function(){
 
 
 const date=new Date();
+console.log(date);
 dateChange.textContent=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
 timeChange.textContent=date.getHours()+":"+date.getMinutes();
