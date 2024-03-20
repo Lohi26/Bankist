@@ -5,14 +5,14 @@ const account1 = {
     interestRate: 1.2,
     pin: 7,
     movementsDates: [
-        '2019-11-18T21:31:17.178Z',
-        '2019-12-23T07:42:02.383Z',
-        '2020-01-28T09:15:04.904Z',
-        '2020-04-01T10:17:24.185Z',
-        '2020-05-08T14:11:59.604Z',
-        '2020-05-27T17:01:17.194Z',
-        '2020-07-11T23:36:17.929Z',
-        '2020-07-12T10:51:36.790Z',
+        '2024-01-18T21:31:17.178Z',
+        '2024-02-23T07:42:02.383Z',
+        '2024-01-28T09:15:04.904Z',
+        '2024-02-01T10:17:24.185Z',
+        '2024-02-08T14:11:59.604Z',
+        '2024-01-27T17:01:17.194Z',
+        '2024-01-11T23:36:17.929Z',
+        '2024-03-20T10:51:36.790Z',
     ],
     currency: 'EUR',
     locale: 'pt-PT' // de-DE
@@ -24,14 +24,14 @@ const account2 = {
     interestRate: 1.5,
     pin: 18,
     movementsDates: [
-        '2019-11-01T13:15:33.035Z',
-        '2019-11-30T09:48:16.867Z',
-        '2019-12-25T06:04:23.907Z',
-        '2020-01-25T14:18:46.235Z',
-        '2020-02-05T16:33:06.386Z',
-        '2020-04-10T14:43:26.374Z',
-        '2020-06-25T18:49:59.371Z',
-        '2020-07-26T12:01:20.894Z',
+        '2024-03-01T13:15:33.035Z',
+        '2024-03-03T09:48:16.867Z',
+        '2024-03-10T06:04:23.907Z',
+        '2024-03-11T14:18:46.235Z',
+        '2024-03-13T16:33:06.386Z',
+        '2024-03-15T14:43:26.374Z',
+        '2024-03-16T18:49:59.371Z',
+        '2024-03-20T12:01:20.894Z',
     ],
     currency: 'USD',
     locale: 'en-US'
@@ -43,14 +43,14 @@ const account3 = {
     interestRate: 0.7,
     pin: 96,
     movementsDates: [
-          "2022-03-10T08:00:00.000Z",
-          "2022-04-15T12:30:00.000Z",
-          "2022-05-20T09:45:00.000Z",
-          "2022-06-25T15:15:00.000Z",
-          "2022-07-30T08:20:00.000Z",
-          "2022-08-10T16:35:00.000Z",
-          "2022-09-20T12:50:00.000Z",
-          "2022-10-25T07:05:00.000Z"
+          "2024-03-19T08:00:00.000Z",
+          "2024-03-18T12:30:00.000Z",
+          "2024-03-17T09:45:00.000Z",
+          "2024-03-20T15:15:00.000Z",
+          "2024-02-29T08:20:00.000Z",
+          "2024-02-10T16:35:00.000Z",
+          "2024-02-20T12:50:00.000Z",
+          "2024-01-25T07:05:00.000Z"
     ],
     currency: "CAD",
     locale: "en-CA"
@@ -62,11 +62,12 @@ const account4 = {
     interestRate: 1,
     pin: 33,
     movementsDates: [
-        "2022-11-05T10:30:00.000Z",
-        "2022-12-10T14:00:00.000Z",
-        "2023-01-15T10:15:00.000Z",
-        "2023-02-20T15:45:00.000Z",
-        "2023-03-25T08:50:00.000Z"
+        "2024-03-05T09:30:00.000Z",
+        "2024-03-10T14:45:00.000Z",
+        "2024-03-15T11:00:00.000Z",
+        "2024-03-18T16:15:00.000Z",
+        "2024-03-20T09:30:00.000Z"
+
     ],
     currency: "AUD",
     locale: "en-AU"
@@ -95,7 +96,7 @@ const sortAmounts=document.querySelector(".sorting");
 const dateChange=document.querySelector(".date");
 const timeChange=document.querySelector(".time");
 
-
+// console.log(new Date(account1.movementsDates[0])-new Date(account1.movementsDates[1]));
 
 let bool=true;
 const date=new Date();
@@ -109,7 +110,9 @@ let seconds=date.getSeconds()
 let milliseconds=date.getMilliseconds();
 month=month<=9?"0"+month:month;
 dates=dates<=9?"0"+dates:dates;
-
+const str=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
+//or
+//const str=dates+"/"+month+"/"+year;
 
 const checkuser=function(accounts){
     accounts.forEach(function(ele,i){
@@ -154,9 +157,20 @@ const displayAmount = function (loginUser,sort) {
         loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
     }
     array.forEach(function(arr,i){
-        // console.log(loginUser.movementsDates[i]);
-        const [str1,str2]=loginUser.movementsDates[i].split("T");
-        const dateDisplay=str1.split("-").reverse().join("/");
+        // const [str1,str2]=loginUser.movementsDates[i].split("T");
+        // const display=str1.split("-").reverse().join("/");
+
+        //or use "today" or "yeaterday" or "x days ago"
+
+        const diff=Math.round(Math.abs(new Date(loginUser.movementsDates[i])-date)/(1000*60*60*24));
+        // console.log(diff);
+        let dateDisplay="";
+        if(diff==0)
+        dateDisplay="Today";
+        else if(diff==1)
+        dateDisplay="Yesterday";
+        else
+        dateDisplay=`${diff} days ago`;
         const html=`<div class="row-1-st">
         <div class="row${Math.floor(arr)>0?"-1":"1"}">${i+1} ${Math.floor(arr)>0?"deposit":"withdrawal"}</div>
         <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dateDisplay}</div>
@@ -274,5 +288,5 @@ totalDisplay.addEventListener("click",function(){
 });
 
 
-dateChange.textContent=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
+dateChange.textContent=str;
 timeChange.textContent=date.getHours()+":"+`${date.getMinutes()}`.padStart(2,0);

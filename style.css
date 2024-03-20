@@ -214,7 +214,7 @@ body, .head{
     background-color: #fff;
     border-radius: 1rem;
     overflow: scroll;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 
