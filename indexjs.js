@@ -75,8 +75,6 @@ const account4 = {
     locale: "en-AU"
 };
 
-let str=account1.movementsDates[0].split("-");
-console.log(str);
 
 const accounts=[account1,account2,account3,account4];
 
@@ -122,6 +120,7 @@ userButton.addEventListener("click",function(e){
         //disappera//
         userNameUser.value="";
         userPassword.value="";
+        userNameUser.blur();
         userPassword.blur();
         //disappear//
         displayAmount(loginUser);
@@ -136,7 +135,7 @@ userButton.addEventListener("click",function(e){
 
 
 const displayAmount = function (loginUser,sort) {
-    if(bool)
+    if(bool==false)
     {
         let year=date.getFullYear();
         let month=date.getMonth()+1;
@@ -152,14 +151,16 @@ const displayAmount = function (loginUser,sort) {
     const array=sort ? loginUser.amount.slice().sort((a,b) => a-b):loginUser.amount;
     main2Container.innerHTML="";
     array.forEach(function(arr,i){
+        const [str1,str2]=loginUser.movementsDates[i].split("T");
+        const dateDisplay=str1.split("-").reverse().join("/");
         const html=`<div class="row-1-st">
         <div class="row${Math.floor(arr)>0?"-1":"1"}">${i+1} ${Math.floor(arr)>0?"deposit":"withdrawal"}</div>
-        <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginUser.movementsDates[i]}</div>
+        <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dateDisplay}</div>
         <div class="row-3">${Math.floor(arr)} €</div>
       </div>`;
       main2Container.insertAdjacentHTML("afterbegin",html);
     });
-    
+    bool=true;
 };
 
 let balanceAccounts;
@@ -195,6 +196,8 @@ transferButton.addEventListener("click",function(){
         displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
+        branchAmount.value="";
+        branchEnter.value="";
     }
     else
     {
@@ -212,6 +215,8 @@ op3.addEventListener("click",function(){
     {
         accounts.splice(index,1);
         alert(`${findedObjectCloseAccount.owner} account is closed successfully`);
+        closeUser.value="";
+        closePins.value="";
     }
     else
     {
@@ -238,6 +243,7 @@ op2.addEventListener("click",function(){
         displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
+        loanEnter.value="";
     }
     else
     alert("Cannot provide loan to this user");
