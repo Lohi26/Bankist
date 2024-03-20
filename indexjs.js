@@ -66,10 +66,7 @@ const account4 = {
         "2022-12-10T14:00:00.000Z",
         "2023-01-15T10:15:00.000Z",
         "2023-02-20T15:45:00.000Z",
-        "2023-03-25T08:50:00.000Z",
-        "2023-04-05T17:05:00.000Z",
-        "2023-05-15T13:20:00.000Z",
-        "2023-06-20T07:35:00.000Z"
+        "2023-03-25T08:50:00.000Z"
     ],
     currency: "AUD",
     locale: "en-AU"
@@ -101,6 +98,19 @@ const timeChange=document.querySelector(".time");
 // console.log(account3.movementsDates.length);
 
 let bool=true;
+const date=new Date();
+console.log(date);
+let year=date.getFullYear();
+let month=date.getMonth()+1;
+let dates=date.getDate();
+let hours=date.getHours();
+let minutes=date.getMinutes();
+let seconds=date.getSeconds()
+let milliseconds=date.getMilliseconds();
+month=month<=9?"0"+month:month;
+dates=dates<=9?"0"+dates:dates;
+
+
 const checkuser=function(accounts){
     accounts.forEach(function(ele,i){
         ele.userName=ele.owner.toLowerCase().split(" ").map( uName => uName[0]).join("");
@@ -135,22 +145,16 @@ userButton.addEventListener("click",function(e){
 
 
 const displayAmount = function (loginUser,sort) {
-    if(bool==false)
-    {
-        let year=date.getFullYear();
-        let month=date.getMonth()+1;
-        let dates=date.getDate();
-        let hours=date.getHours();
-        let minutes=date.getMinutes();
-        let seconds=date.getSeconds()
-        let milliseconds=date.getMilliseconds();
-        month=month<=9?"0"+month:month;
-        dates=dates<=9?"0"+dates:dates;
-        loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");   
-    }
+    console.log(loginUser);
+    console.log(bool);
     const array=sort ? loginUser.amount.slice().sort((a,b) => a-b):loginUser.amount;
     main2Container.innerHTML="";
+    if(bool===false)
+    {
+        loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
+    }
     array.forEach(function(arr,i){
+        console.log(loginUser.movementsDates[i]);
         const [str1,str2]=loginUser.movementsDates[i].split("T");
         const dateDisplay=str1.split("-").reverse().join("/");
         const html=`<div class="row-1-st">
@@ -185,13 +189,14 @@ const displayDetails=function(amounts,loginUser)
 };
 
 
-
 transferButton.addEventListener("click",function(){
     const findedObjectAccount=accounts.find(account => account.userName===branchEnter.value);
     if(branchAmount.value<balanceAccounts && findedObjectAccount?.userName!==loginUser.userName)
     {
         bool=bool?false:true;
         findedObjectAccount.amount.push(Number(branchAmount.value));
+        findedObjectAccount.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
+        console.log(findedObjectAccount.movementsDates);
         loginUser.amount.push(Number("-"+branchAmount.value));
         displayAmount(loginUser);
         totalFunction(loginUser.amount);
@@ -205,6 +210,25 @@ transferButton.addEventListener("click",function(){
     }
     branchAmount.value="";
     branchEnter.value="";
+});
+
+
+op2.addEventListener("click",function(){
+    const loanAmount=Math.floor(loanEnter.value);
+    if(loginUser.amount.some(ele => ele>=loanAmount*0.1))
+    {
+        bool=bool?false:true;
+        loginUser.amount.push(loanAmount);
+        // loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
+        console.log(loginUser.movementsDates);
+        displayAmount(loginUser);
+        totalFunction(loginUser.amount);
+        displayDetails(loginUser.amount,loginUser);
+        loanEnter.value="";
+    }
+    else
+    alert("Cannot provide loan to this user");
+    loanEnter.value="";
 });
 
 
@@ -234,23 +258,6 @@ op3.addEventListener("click",function(){
 });
 
 
-op2.addEventListener("click",function(){
-    const loanAmount=Math.floor(loanEnter.value);
-    if(loginUser.amount.some(ele => ele>=loanAmount*0.1))
-    {
-        bool=bool?false:true;
-        loginUser.amount.push(loanAmount);
-        displayAmount(loginUser);
-        totalFunction(loginUser.amount);
-        displayDetails(loginUser.amount,loginUser);
-        loanEnter.value="";
-    }
-    else
-    alert("Cannot provide loan to this user");
-    loanEnter.value="";
-});
-
-
 let sort=true;
 sortAmounts.addEventListener("click",function(){
     displayAmount(loginUser,sort);
@@ -264,7 +271,5 @@ totalDisplay.addEventListener("click",function(){
 
 
 
-const date=new Date();
-console.log(date);
 dateChange.textContent=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
 timeChange.textContent=date.getHours()+":"+date.getMinutes();
