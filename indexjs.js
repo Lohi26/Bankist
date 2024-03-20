@@ -121,7 +121,7 @@ userButton.addEventListener("click",function(e){
         userPassword.value="";
         userPassword.blur();
         //disappear//
-        displayAmount(loginUser.amount);
+        displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
     }
@@ -132,12 +132,13 @@ userButton.addEventListener("click",function(e){
 });
 
 
-const displayAmount = function (amount,sort) {
-    const array=sort ? amount.slice().sort((a,b) => a-b):amount;
+const displayAmount = function (loginUser,sort) {
+    const array=sort ? loginUser.amount.slice().sort((a,b) => a-b):loginUser.amount;
     main2Container.innerHTML="";
     array.forEach(function(arr,i){
         const html=`<div class="row-1-st">
         <div class="row${Math.floor(arr)>0?"-1":"1"}">${i+1} ${Math.floor(arr)>0?"deposit":"withdrawal"}</div>
+        <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginUser.movementsDates[i]}</div>
         <div class="row-3">${Math.floor(arr)} €</div>
       </div>`;
       main2Container.insertAdjacentHTML("afterbegin",html);
@@ -227,7 +228,7 @@ op2.addEventListener("click",function(){
 
 let sort=true;
 sortAmounts.addEventListener("click",function(){
-    displayAmount(loginUser.amount,sort);
+    displayAmount(loginUser,sort);
     sort=sort?false:true;
 });
 
