@@ -1,9 +1,9 @@
 'use strict';
 const account1 = {
-    owner: "Chandrasekaran Lohitav",
+    owner: "Chennai Super Kings",
     amount: [200.52, 450, -400, 3000.23, -650, -130, 70.25, 1300],
     interestRate: 1.2,
-    pin: 26,
+    pin: 7,
     movementsDates: [
         '2019-11-18T21:31:17.178Z',
         '2019-12-23T07:42:02.383Z',
@@ -19,10 +19,10 @@ const account1 = {
 };
 
 const account2 = {
-    owner: "Minnie Innocent",
+    owner: "Royal Challenges Bangalore",
     amount: [5000.70, 3400, -150.235, -790, -3210, -1000.89, 8500, -30],
     interestRate: 1.5,
-    pin: 19,
+    pin: 18,
     movementsDates: [
         '2019-11-01T13:15:33.035Z',
         '2019-11-30T09:48:16.867Z',
@@ -38,10 +38,10 @@ const account2 = {
 };
 
 const account3 = {
-    owner: "Sanjay Karthik",
+    owner: "Kolkata Knight Riders",
     amount: [200.25, -200, 340.8, -300, -20.58, 50, 400.03, -460],
     interestRate: 0.7,
-    pin: 20,
+    pin: 96,
     movementsDates: [
           "2022-03-10T08:00:00.000Z",
           "2022-04-15T12:30:00.000Z",
@@ -57,10 +57,10 @@ const account3 = {
 };
 console.log()
 const account4 = {
-    owner: "Padmavathi Kannappan",
+    owner: "Mumbai Indians",
     amount: [430.74, 1000, 700.2, 50, 90.0],
     interestRate: 1,
-    pin: 6,
+    pin: 33,
     movementsDates: [
         "2022-11-05T10:30:00.000Z",
         "2022-12-10T14:00:00.000Z",
@@ -95,7 +95,7 @@ const sortAmounts=document.querySelector(".sorting");
 const dateChange=document.querySelector(".date");
 const timeChange=document.querySelector(".time");
 
-// console.log(account3.movementsDates.length);
+
 
 let bool=true;
 const date=new Date();
@@ -125,7 +125,7 @@ userButton.addEventListener("click",function(e){
     loginUser=accounts.find(account => account.userName===userNameUser.value);
     if(loginUser?.pin===Number(userPassword.value))
     {
-        messgae.textContent=`Welcome back! ${loginUser.owner.split(" ").find(str => str)}`;
+        messgae.textContent=`Welcome back! ${loginUser.owner}`;
         container.classList.remove("container");
         //disappera//
         userNameUser.value="";
@@ -145,8 +145,8 @@ userButton.addEventListener("click",function(e){
 
 
 const displayAmount = function (loginUser,sort) {
-    console.log(loginUser);
-    console.log(bool);
+    // console.log(loginUser);
+    // console.log(bool);
     const array=sort ? loginUser.amount.slice().sort((a,b) => a-b):loginUser.amount;
     main2Container.innerHTML="";
     if(bool===false)
@@ -154,7 +154,7 @@ const displayAmount = function (loginUser,sort) {
         loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
     }
     array.forEach(function(arr,i){
-        console.log(loginUser.movementsDates[i]);
+        // console.log(loginUser.movementsDates[i]);
         const [str1,str2]=loginUser.movementsDates[i].split("T");
         const dateDisplay=str1.split("-").reverse().join("/");
         const html=`<div class="row-1-st">
@@ -196,13 +196,17 @@ transferButton.addEventListener("click",function(){
         bool=bool?false:true;
         findedObjectAccount.amount.push(Number(branchAmount.value));
         findedObjectAccount.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
-        console.log(findedObjectAccount.movementsDates);
+        // console.log(findedObjectAccount.movementsDates);
         loginUser.amount.push(Number("-"+branchAmount.value));
         displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
         branchAmount.value="";
         branchEnter.value="";
+    }
+    else if(findedObjectAccount.userName)
+    {
+        alert("Enter correct user name");
     }
     else
     {
@@ -270,6 +274,5 @@ totalDisplay.addEventListener("click",function(){
 });
 
 
-
 dateChange.textContent=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
-timeChange.textContent=date.getHours()+":"+date.getMinutes();
+timeChange.textContent=date.getHours()+":"+`${date.getMinutes()}`.padStart(2,0);
