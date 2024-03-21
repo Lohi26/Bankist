@@ -285,14 +285,19 @@ op2.addEventListener("click",function(){
     const loanAmount=Number(loanEnter.value);
     if(loginUser.amount.some(ele => ele>=loanAmount*0.1))
     {
-        bool=bool?false:true;
-        loginUser.amount.push(loanAmount);
-        // loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
-        // console.log(loginUser.movementsDates);
-        displayAmount(loginUser);
-        totalFunction(loginUser.amount);
-        displayDetails(loginUser.amount,loginUser);
-        loanEnter.value="";
+        let timeOutBool=false;
+        setTimeout(function(){
+            bool=bool?false:true;
+            loginUser.amount.push(loanAmount);
+            // loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
+            // console.log(loginUser.movementsDates);
+            displayAmount(loginUser);
+            totalFunction(loginUser.amount);
+            displayDetails(loginUser.amount,loginUser);
+            loanEnter.value="";
+            alert("Approved your loan....");
+        },5000);
+        alert("Waiting for approval.......");
     }
     else
     alert("Cannot provide loan to this user");
