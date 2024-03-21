@@ -293,6 +293,14 @@ body, .head{
 }
 
 
+.last-last{
+    margin-top: 25px;
+    margin-left: 550px;
+    color: #606060;
+    font-weight: bolder;
+}
+
+
 @media screen and (max-width: 768px) {
     .inter1{
         margin-left: auto;
