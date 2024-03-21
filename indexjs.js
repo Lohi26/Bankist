@@ -115,6 +115,21 @@ const strDate=dates+"/"+month+"/"+year;
 // const strTime=date.getHours()+":"+`${date.getMinutes()}`.padStart(2,0);
 //or
 const strtime=hours+":"+minutes;
+
+
+const options={
+    hour:"numeric",
+    minute:"numeric",
+    day:"numeric",
+    month:"numeric",
+    year:"numeric",
+};
+
+dateChange.textContent="";
+// console.log(str);
+timeChange.textContent="";
+
+
 const checkuser=function(accounts){
     accounts.forEach(function(ele,i){
         ele.userName=ele.owner.toLowerCase().split(" ").map( uName => uName[0]).join("");
@@ -151,6 +166,7 @@ userButton.addEventListener("click",function(e){
 const displayAmount = function (loginUser,sort) {
     // console.log(loginUser);
     // console.log(bool);
+    dateChange.textContent=new Intl.DateTimeFormat(loginUser.locale,options).format(date);
     const array=sort ? loginUser.amount.slice().sort((a,b) => a-b):loginUser.amount;
     main2Container.innerHTML="";
     if(bool===false)
@@ -159,6 +175,11 @@ const displayAmount = function (loginUser,sort) {
     }
     // console.log("Okay!!");
     array.forEach(function(arr,i){
+        const option={
+            day:"numeric",
+            month:"numeric",
+            year:"numeric"
+        }
         // console.log(new Date(loginUser.movementsDates[i]));
         // console.log(date);
         const diff=Math.round(Math.abs(new Date(loginUser.movementsDates[i])-date)/(1000*60*60*24));
@@ -172,8 +193,7 @@ const displayAmount = function (loginUser,sort) {
         dateDisplay=`${diff} days ago`;
         else
         {
-            const [str1,str2]=loginUser.movementsDates[i].split("T");
-            dateDisplay=str1.split("-").reverse().join("/");
+            dateDisplay=new Intl.DateTimeFormat(loginUser.locale,option).format(new Date(loginUser.movementsDates[i]));
         }
         const html=`<div class="row-1-st">
         <div class="row${Math.floor(arr)>0?"-1":"1"}">${i+1} ${Math.floor(arr)>0?"deposit":"withdrawal"}</div>
@@ -290,8 +310,3 @@ sortAmounts.addEventListener("click",function(){
 totalDisplay.addEventListener("click",function(){
     const arr=Array.from(document.querySelectorAll(".row-3"),(ele,i)=>Number(ele.textContent.replace("€","")));
 });
-
-
-dateChange.textContent=strDate;
-// console.log(str);
-timeChange.textContent=strtime;
