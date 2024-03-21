@@ -95,6 +95,7 @@ const closePins=document.querySelector(".pins");
 const sortAmounts=document.querySelector(".sorting");
 const dateChange=document.querySelector(".date");
 const timeChange=document.querySelector(".time");
+const runningtime=document.querySelector(".last-last-last");
 // let ining=document.querySelector(".amt-style1").textContent;
 // let outing=document.querySelector(".amt-style2").textContent;
 // let intersting=document.querySelector(".amt-style3").textContent;
@@ -142,13 +143,14 @@ const checkuser=function(accounts){
 checkuser(accounts);
 
 
-let loginUser;
+let loginUser,interval;
 userButton.addEventListener("click",function(e){
     e.preventDefault();
     loginUser=accounts.find(account => account.userName===userNameUser.value);
     if(loginUser?.pin===Number(userPassword.value))
     {
         messgae.textContent=`Welcome back! ${loginUser.owner}`;
+        
         container.classList.remove("container");
         //disappera//
         userNameUser.value="";
@@ -159,6 +161,9 @@ userButton.addEventListener("click",function(e){
         displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
+        if(interval)
+        clearInterval(interval);
+        interval=logOutFunction();
     }
     else
     {
@@ -341,3 +346,28 @@ sortAmounts.addEventListener("click",function(){
 totalDisplay.addEventListener("click",function(){
     const arr=Array.from(document.querySelectorAll(".row-3"),(ele,i)=>Number(ele.textContent.replace("€","")));
 });
+
+const logOutFunction=function(){
+    const logOut=function(){
+        runningtime.textContent=`${minutes}:${seconds<=9?`0${seconds}`: seconds}`;
+        if(seconds<=0)
+        {
+            seconds=60;
+            minutes--;
+        }
+        if(minutes<0)
+        {
+            container.classList.add("container");
+            messgae.textContent="Log in to get started";
+            clearInterval(interval);
+        }
+        seconds--;
+    }
+    let minutes=5;
+    let seconds=60;
+    // console.log(minutes);
+    // console.log(seconds);
+    logOut();
+    const interval=setInterval(logOut,1000);
+    return interval;
+}
