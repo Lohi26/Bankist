@@ -100,20 +100,21 @@ const timeChange=document.querySelector(".time");
 
 let bool=true;
 const date=new Date();
-console.log(date);
+// console.log(date);
 let year=date.getFullYear();
-let month=date.getMonth()+1;
-let dates=date.getDate();
-let hours=date.getHours();
-let minutes=date.getMinutes();
-let seconds=date.getSeconds()
+let month=`${date.getMonth()+1}`.padStart(2,0);
+let dates=`${date.getDate()}`.padStart(2,0);
+let hours=`${date.getHours()}`.padStart(2,0);
+let minutes=`${date.getMinutes()}`.padStart(2,0);
+let seconds=`${date.getSeconds()}`.padStart(2,0);
 let milliseconds=date.getMilliseconds();
-month=month<=9?"0"+month:month;
-dates=dates<=9?"0"+dates:dates;
-const str=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
+// const strDate=date.getDate()+"/"+(date.getMonth()+1<=9?"0"+(date.getMonth()+1):(date.getMonth()+1))+"/"+date.getFullYear();
 //or
-//const str=dates+"/"+month+"/"+year;
+const strDate=dates+"/"+month+"/"+year;
 
+// const strTime=date.getHours()+":"+`${date.getMinutes()}`.padStart(2,0);
+//or
+const strtime=hours+":"+minutes;
 const checkuser=function(accounts){
     accounts.forEach(function(ele,i){
         ele.userName=ele.owner.toLowerCase().split(" ").map( uName => uName[0]).join("");
@@ -156,12 +157,14 @@ const displayAmount = function (loginUser,sort) {
     {
         loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
     }
+    // console.log("Okay!!");
     array.forEach(function(arr,i){
         // const [str1,str2]=loginUser.movementsDates[i].split("T");
         // const display=str1.split("-").reverse().join("/");
 
         //or use "today" or "yeaterday" or "x days ago"
-
+        // console.log(new Date(loginUser.movementsDates[i]));
+        // console.log(date);
         const diff=Math.round(Math.abs(new Date(loginUser.movementsDates[i])-date)/(1000*60*60*24));
         // console.log(diff);
         let dateDisplay="";
@@ -238,7 +241,7 @@ op2.addEventListener("click",function(){
         bool=bool?false:true;
         loginUser.amount.push(loanAmount);
         // loginUser.movementsDates.push(year+"-"+month+"-"+dates+"T"+hours+":"+minutes+":"+seconds+"."+milliseconds+"Z");
-        console.log(loginUser.movementsDates);
+        // console.log(loginUser.movementsDates);
         displayAmount(loginUser);
         totalFunction(loginUser.amount);
         displayDetails(loginUser.amount,loginUser);
@@ -288,5 +291,6 @@ totalDisplay.addEventListener("click",function(){
 });
 
 
-dateChange.textContent=str;
-timeChange.textContent=date.getHours()+":"+`${date.getMinutes()}`.padStart(2,0);
+dateChange.textContent=strDate;
+// console.log(str);
+timeChange.textContent=strtime;
