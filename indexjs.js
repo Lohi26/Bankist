@@ -159,10 +159,6 @@ const displayAmount = function (loginUser,sort) {
     }
     // console.log("Okay!!");
     array.forEach(function(arr,i){
-        // const [str1,str2]=loginUser.movementsDates[i].split("T");
-        // const display=str1.split("-").reverse().join("/");
-
-        //or use "today" or "yeaterday" or "x days ago"
         // console.log(new Date(loginUser.movementsDates[i]));
         // console.log(date);
         const diff=Math.round(Math.abs(new Date(loginUser.movementsDates[i])-date)/(1000*60*60*24));
@@ -172,8 +168,13 @@ const displayAmount = function (loginUser,sort) {
         dateDisplay="Today";
         else if(diff==1)
         dateDisplay="Yesterday";
-        else
+        else if(diff<=7)
         dateDisplay=`${diff} days ago`;
+        else
+        {
+            const [str1,str2]=loginUser.movementsDates[i].split("T");
+            dateDisplay=str1.split("-").reverse().join("/");
+        }
         const html=`<div class="row-1-st">
         <div class="row${Math.floor(arr)>0?"-1":"1"}">${i+1} ${Math.floor(arr)>0?"deposit":"withdrawal"}</div>
         <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dateDisplay}</div>
