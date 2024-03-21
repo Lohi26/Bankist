@@ -95,6 +95,10 @@ const closePins=document.querySelector(".pins");
 const sortAmounts=document.querySelector(".sorting");
 const dateChange=document.querySelector(".date");
 const timeChange=document.querySelector(".time");
+// let ining=document.querySelector(".amt-style1").textContent;
+// let outing=document.querySelector(".amt-style2").textContent;
+// let intersting=document.querySelector(".amt-style3").textContent;
+
 
 // console.log(new Date(account1.movementsDates[0])-new Date(account1.movementsDates[1]));
 
@@ -180,6 +184,10 @@ const displayAmount = function (loginUser,sort) {
             month:"numeric",
             year:"numeric"
         }
+        const amountsUser={
+            style:"currency",
+            currency:loginUser.currency,
+        };
         // console.log(new Date(loginUser.movementsDates[i]));
         // console.log(date);
         const diff=Math.round(Math.abs(new Date(loginUser.movementsDates[i])-date)/(1000*60*60*24));
@@ -195,35 +203,53 @@ const displayAmount = function (loginUser,sort) {
         {
             dateDisplay=new Intl.DateTimeFormat(loginUser.locale,option).format(new Date(loginUser.movementsDates[i]));
         }
+        const num=Math.floor(arr);
         const html=`<div class="row-1-st">
-        <div class="row${Math.floor(arr)>0?"-1":"1"}">${i+1} ${Math.floor(arr)>0?"deposit":"withdrawal"}</div>
+        <div class="row${arr>0?"-1":"1"}">${i+1} ${arr>0?"deposit":"withdrawal"}</div>
         <div class="row-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${dateDisplay}</div>
-        <div class="row-3">${Math.floor(arr)} €</div>
+        <div class="row-3">${new Intl.NumberFormat(loginUser.locale,amountsUser).format(num)}</div>
       </div>`;
       main2Container.insertAdjacentHTML("afterbegin",html);
     });
     bool=true;
 };
 
+
 let balanceAccounts;
 const totalFunction=function(amounts)
 {
+    const amountsUser={
+        style:"currency",
+        currency:loginUser.currency,
+    };
     const totalAmountAccount=amounts.reduce( (acc,arr) => acc+arr,0);
     balanceAccounts=totalAmountAccount;
-    totalDisplay.textContent=Math.floor(totalAmountAccount)+"  €";
+    const num1=Math.floor(totalAmountAccount);
+    totalDisplay.textContent=new Intl.NumberFormat(loginUser.locale,amountsUser).format(num1);
 };
 
 
 const displayDetails=function(amounts,loginUser)
 {
-    document.querySelector(".amt-style1").textContent=amounts.filter( ele => ele>0)
-    .reduce( (acc,ele) => acc+Math.floor(ele),0)+" €";
-    document.querySelector(".amt-style2").textContent=Math.abs(amounts.filter( ele => ele<0)
-    .reduce( (acc,ele) => acc+Math.floor(ele),0))+" €";
-    document.querySelector(".amt-style3").textContent=amounts.filter( ele => ele>0)
-    .map( ele => Math.floor(ele)*loginUser.interestRate/100)
+    const amountsUser={
+        style:"currency",
+        currency:loginUser.currency,
+    };
+    const amts=amounts.map( ele => Math.floor(ele));
+    // console.log(amts);
+    const inins=amts.filter( ele => ele>0).reduce( (acc,ele) => acc+ele,0);
+    const outouts=Math.abs(amts.filter( ele => ele<0)
+    .reduce( (acc,ele) => acc+ele,0));
+    const interstss=amts.filter( ele => ele>0)
+    .map( ele => ele*loginUser.interestRate/100)
     .filter(ele => ele>=1)
-    .reduce( (acc,ele) => Math.floor(ele)+acc,0)+" €";
+    .reduce( (acc,ele) => ele+acc,0);
+    const ining=new Intl.NumberFormat(loginUser.locale,amountsUser).format(inins);
+    const outing=new Intl.NumberFormat(loginUser.locale,amountsUser).format(outouts);
+    const intersting=new Intl.NumberFormat(loginUser.locale,amounts).format(interstss);
+    document.querySelector(".amt-style1").textContent=ining;
+    document.querySelector(".amt-style2").textContent=outing;
+    document.querySelector(".amt-style3").textContent=intersting;
 };
 
 
@@ -256,7 +282,7 @@ transferButton.addEventListener("click",function(){
 
 
 op2.addEventListener("click",function(){
-    const loanAmount=Math.floor(loanEnter.value);
+    const loanAmount=Number(loanEnter.value);
     if(loginUser.amount.some(ele => ele>=loanAmount*0.1))
     {
         bool=bool?false:true;
